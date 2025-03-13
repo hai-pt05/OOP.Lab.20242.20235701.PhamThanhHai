@@ -1,0 +1,18 @@
+Questions:
+- What happens if users choose “Cancel”?
+- How to customize the options to users, e.g. only two options: “Yes” and “No”, 
+OR “I do” and "I don't"
+
+Answers:
+
+1. Khi người dùng chọn Cancel
+    Màn hình sẽ thông báo: "You've chosen No"
+
+2.Để tuỳ chỉnh tuỳ chọn cho người dùng trong hộp thoại JOption, ta có thể dùng
+
+JOptionPane.showOptionDialog để tuỳ chỉnh nút bấm, hiển thị message
+
+Trong chương trình AnswerChoosingOption.java:
+    - Tạo mảng Objects chứa các tuỳ chọn cho người dùng
+    - Sử dụng JOptionPane.showDialog để tuỳ chỉnh nút bấm, thông điệp, icon,...
+    - Sử dụng JOptionPane.YES_NO_OPTION để làm loại tuỳ chọn YES/NO (I do/ I don't)
