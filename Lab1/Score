@@ -1,0 +1,3 @@
+Score: 9.5
+Comments: - Trong bài tính toán các phép toán, không nên print "Không chia cho 0" ngay trong lệnh if else
+          - Điều kiện LeapYear đang sai.
