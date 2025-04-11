@@ -1,0 +1,34 @@
+* Question 1: Is JAVA a Pass by Value or a Pass by Reference programming language?
+-> Answer 1:
+    - Java là một ngôn ngữ lập trình Pass by Value (truyền giá trị), không phải 
+Pass by Reference (truyền tham chiếu)
+
+    - Pass by Value (truyền giá trị): khi truyền một tham số, giá trị tham số được
+sao chép và gửi đến phương thức và phương thức sẽ làm việc với 
+bản sao mà không thay đổi biến gốc
+
+    - Pass by Reference (truyền tham chiếu): khi truyền tham số, sẽ làm việc trực 
+tiếp với biến gốc nên khi thay đổi trong phương thức sẽ ảnh hưởng ngay đến biến bên 
+ngoài và không cần trả về. Điều này trong Java không hỗ trợ
+
+    - Trong Java, khi truyền một đối tượng vào phương thức là truyền đi bản sao của 
+của tham chiếu đến đối tượng, chứ không phải chính đối tượng.
+
+* Question 2: After the call of swap(jungleDVD, cinderellaDVD) why does the title of 
+these two objects still remain?
+-> Answer 2:
+    - Sau khi gọi swap, tiêu đề hai đối tượng vẫn giữ nguyên vì Java dùng cơ chế pass
+by value, tham số o1 và o2 chỉ là bản sao của tham chiếu jungleDVD và cinderellaDVD. Hoán
+đổi o1 và o2 chỉ thay đổi giá trị của bản sao, không thay đổi giá trị của 2 đối tượng trong main
+
+* Question 3: After the call of changeTitle(jungleDVD, cinderellaDVD.getTitle()) why is
+the title of the JungleDVD changed?
+-> Answer: 
+    - Tiêu đề của jungleDVD thay đổi sang CinderellaDVD sau kho gọi changeTitle vì phương thức 
+này đã làm thay đổi trạng thái bên trong của đối tượng jungleDVD trỏ tới thông qua setTitle
+
+    - Trong changeTitle, dòng dvd.setTitle thay đổi trạng thái bên trong của đối tượng mà cả
+dvd và jungleDVD cùng trỏ tới. Trong Java, khi truyền một tham chiếu (reference type), bản sao 
+của tham chiếu được truyền, nhưng cả bản sao và gốc đều trỏ đến cùng một đối tượng trong bộ nhớ. 
+Do đó, bất kỳ thay đổi nào đến trạng thái đối tượng (như title) sẽ được phản ánh ở tất cả các tham 
+chiếu đến đối tượng đó.
