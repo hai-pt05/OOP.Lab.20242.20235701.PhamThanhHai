@@ -1,0 +1,9 @@
+7. Hỗ trợ thêm
+Tệp đầu vào:
+Nếu bạn cần hướng dẫn chi tiết về cách tạo tệp lớn hoặc cách đặt tệp trong Eclipse, hãy yêu cầu.
+So sánh thêm:
+Nếu bạn muốn thêm thử nghiệm với StringBuffer hoặc các kịch bản khác, tôi có thể cung cấp mã.
+Tiếp tục Lab03:
+Nếu bạn muốn tiếp tục với phần 7 hoặc các phần khác, hãy cho tôi biết để tôi cung cấp hướng dẫn.
+Kiểm tra mã:
+Nếu bạn gặp lỗi khi chạy các lớp trên hoặc cần kiểm tra mã hiện tại, hãy cung cấp thông báo lỗi hoặc mã liên quan.

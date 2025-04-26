@@ -1,0 +1,108 @@
+C1. What class should implement the Comparable interface?
+Trong AimsProject, lớp Media nên triển khai giao diện Comparable<Media>.
+Vì:
+    - Media là lớp cha trừu tượng của tất cả các loại media (DigitalVideoDisc, Book, CompactDisc).
+    - Các mục trong giỏ hàng (Cart) được lưu trữ trong ArrayList<Media> itemsOrdered, nên việc sắp 
+xếp sẽ được áp dụng trên các đối tượng kiểu Media.
+    - Khi Media triển khai Comparable, tất cả các lớp con sẽ tự động kế thừa khả năng so sánh, và 
+chúng ta có thể ghi đè phương thức compareTo() trong các lớp con nếu cần thứ tự sắp xếp khác
+
+C2. In those classes, how should you implement the compareTo()method to reflect the ordering that
+we want?
+
+- Theo yêu cầu của phần 17,  ta có hai thứ tự sắp xếp:
+    + Theo tiêu đề (title) tăng dần, nếu tiêu đề giống nhau thì theo chi phí (cost) giảm dần.
+    + Theo chi phí (cost) giảm dần, nếu chi phí giống nhau thì theo tiêu đề (title) tăng dần.
+- Giả sử chọn quy tắc theo tiêu đề rồi chi phí, triển khai compareTo():
+
+public int compareTo(Media other) {
+    if (other == null) {
+        throw new NullPointerException("Cannot compare with null Media object");
+    }
+    // So sánh theo title (tăng dần)
+    int titleComparison = this.title.compareTo(other.title);
+    if (titleComparison != 0) {
+        return titleComparison;
+    }
+    // Nếu title giống nhau, so sánh theo cost (giảm dần)
+    return Float.compare(other.cost, this.cost);
+}
+
+
+C3. Can we have two ordering rules of the item (by title then cost and by cost then title) if we use 
+this Comparable interface approach?
+
+- Ta không thể có hai quy tắc sắp xếp (theo tiêu đề rồi chi phí và theo chi phí rồi tiêu đề) nếu chỉ 
+sử dụng giao diện Comparable.
+- vì:
+    + Giao diện Comparable định nghĩa một thứ tự tự nhiên duy nhất cho lớp thông qua phương thức compareTo(). 
+có nghĩa là chỉ có thể triển khai một quy tắc sắp xếp trong compareTo(), ví dụ: theo tiêu đề rồi chi phí.
+
+    + Nếu muốn có quy tắc thứ hai (theo chi phí rồi tiêu đề), ta cần sử dụng giao diện Comparator để định nghĩa 
+một cách sắp xếp bổ sung 
+
+C4. Suppose the DVDs have a different ordering rule from the other media types, that is by title, then
+decreasing length, then cost. How would you modify your code to allow this?
+
+B1: Triển khai Comparable trong Media
+public abstract class Media implements Comparable<Media> {
+    // Các thuộc tính và phương thức khác giữ nguyên...
+
+    public int compareTo(Media other) {
+        if (other == null) {
+            throw new NullPointerException("Cannot compare with null Media object");
+        }
+        // So sánh theo title (tăng dần)
+        int titleComparison = this.title.compareTo(other.title);
+        if (titleComparison != 0) {
+            return titleComparison;
+        }
+        // Nếu title giống nhau, so sánh theo cost (giảm dần)
+        return Float.compare(other.cost, this.cost);
+    }
+}
+
+B2: Ghi đè compareTo() trong DigitalVideoDisc để áp dụng quy tắc riêng:
++ DigitalVideoDisc kế thừa từ Disc, và Disc kế thừa từ Media. Vì vậy, DigitalVideoDisc cũng sẽ triển khai 
+Comparable<Media> (thông qua Media).
+
++ Trong DigitalVideoDisc, ghi đè compareTo() để áp dụng quy tắc: theo tiêu đề (tăng dần), rồi chiều dài 
+(giảm dần), rồi chi phí (giảm dần):
+
+public class DigitalVideoDisc extends Disc implements Playable {
+    // Các thuộc tính, constructor, phương thức khác giữ nguyên...
+
+    public int compareTo(Media other) {
+        if (other == null) {
+            throw new NullPointerException("Cannot compare with null Media object");
+        }
+        // So sánh theo title (tăng dần)
+        int titleComparison = this.getTitle().compareTo(other.getTitle());
+        if (titleComparison != 0) {
+            return titleComparison;
+        }
+        // Nếu title giống nhau, kiểm tra xem other có phải là DVD không
+        if (!(other instanceof DigitalVideoDisc)) {
+            // Nếu other không phải DVD, so sánh theo cost (giảm dần)
+            return Float.compare(other.getCost(), this.getCost());
+        }
+        DigitalVideoDisc otherDVD = (DigitalVideoDisc) other;
+        // Nếu cả hai là DVD, so sánh theo length (giảm dần)
+        int lengthComparison = Integer.compare(otherDVD.getLength(), this.getLength());
+        if (lengthComparison != 0) {
+            return lengthComparison;
+        }
+        // Nếu length giống nhau, so sánh theo cost (giảm dần)
+        return Float.compare(otherDVD.getCost(), this.getCost());
+    }
+}
+
+B3: Kiểm tra trong Cart:
++ Phương thức sortByTitle() trong Cart sẽ gọi Collections.sort(itemsOrdered), và các đối 
+tượng Media sẽ được sắp xếp dựa trên compareTo() của chúng.
+
++ Các đối tượng DigitalVideoDisc sẽ sử dụng compareTo() của DigitalVideoDisc, trong khi 
+các đối tượng khác (Book, CompactDisc) sẽ sử dụng compareTo() của Media.
+
+
+
