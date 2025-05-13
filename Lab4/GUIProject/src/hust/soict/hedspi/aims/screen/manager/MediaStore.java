@@ -9,6 +9,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JOptionPane;
 
 import hust.soict.hedspi.aims.media.Media;
 import hust.soict.hedspi.aims.media.Playable;
@@ -29,8 +30,12 @@ public class MediaStore extends JPanel {
         JPanel container = new JPanel();
         container.setLayout(new FlowLayout(FlowLayout.CENTER));
 
+        //thêm ActionListener cho playButton
         if (media instanceof Playable) {
             JButton playButton = new JButton("Play");
+            playButton.addActionListener(e -> {
+                ((Playable) media).play();		//gọi play() của 
+            });
             container.add(playButton);
         }
 
